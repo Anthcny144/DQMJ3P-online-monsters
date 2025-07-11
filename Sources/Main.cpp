@@ -17,7 +17,7 @@ namespace CTRPluginFramework {
 
     int main() {
         PluginMenu *_3gx = new PluginMenu(title, 1, 0, 0, notes);
-        _3gx->Append(new MenuEntry("Give monster", nullptr, giveMonster, Color::Silver << "Pick a monster to unlock it in the library and add it to your storage, make sure you have enough space in your storage!\n\n" << Color::Orange << "Please note that the created monster will be invalid.\nAn invalid monster cannot be used for StreetPass battles nor WiFi battles.\nThe invalidness of a monster will be passed on if it is fused, or if a Rainbow Fondude is born from the invalid monster."));
+        _3gx->Append(new MenuEntry("Give monster", nullptr, Cheat::giveMonster, Color::Silver << "Pick a monster to unlock it in the library and add it to your storage, make sure you have enough space in your storage!\n\n" << Color::Orange << "Please note that the created monster will be invalid.\nAn invalid monster cannot be used for StreetPass battles nor WiFi battles.\nThe invalidness of a monster will be passed on if it is fused, or if a Rainbow Fondude is born from the invalid monster."));
 
         OSD::Notify(welcome);
 

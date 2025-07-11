@@ -1,4 +1,7 @@
+#pragma once
 #include <CTRPluginFramework.hpp>
 using namespace CTRPluginFramework;
 
-void giveMonster(MenuEntry* entry);
+struct Cheat {
+    static void giveMonster(MenuEntry* entry);
+};
