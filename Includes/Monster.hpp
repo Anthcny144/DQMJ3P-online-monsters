@@ -16,6 +16,7 @@ struct Monster {
     struct Stats {
         u16 hp, mp, atk, def, agi, wis;
         Stats(std::array<u16, 6>& stats);
+        void write(u32 monsterAddr, Stats& stats);
     };
 
     const std::string name, iconName;
@@ -24,14 +25,15 @@ struct Monster {
     u16 skill;
     std::vector<u16> traits;
     Stats stats;
+    u32 checksum;
 
-    Monster(const std::string& name, const std::string& iconName, u16 id, std::array<u32, 2> exp, u16 skill, std::vector<u16> traits, std::array<u16, 6> stats);
+    Monster(const std::string& name, const std::string& iconName, u16 id, std::array<u32, 2> exp, u16 skill, std::vector<u16> traits, std::array<u16, 6> stats, u32 checksum = 0);
 
     static std::vector<Monster> getMonsters();
+    static bool isStorageEmpty();
     static bool isFreeStorageSpace(u32 addr);
     static u32 getFreeSpaceInStorage();
     static u32 getNextFreeIdx();
     static void increaseNextFreeAddr();
-    static bool checkStorageSpace(u16 space);
     static void addMonsterToStorage(Monster& monster);
 };
