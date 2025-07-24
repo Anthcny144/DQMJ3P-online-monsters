@@ -4,8 +4,8 @@
 using namespace CTRPluginFramework;
 
 struct Game {
-    static bool isSaveInit();
     static void unlock(Offset unlockType, u16 id);
+    static bool isUnlocked(Offset unlockType, u16 id);
     static void freezeWifiCoins(u16 coins);
     static bool checkStorageSpace(u16 space);
 };

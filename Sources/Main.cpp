@@ -32,11 +32,13 @@ namespace CTRPluginFramework {
     }
 
     int main() {
-        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 2, 0, 0, String::_3gxNotes);
+        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 2, 1, 0, String::_3gxNotes);
         settings.open("settings.bin");
 
-        _3gx->Append(new MenuEntry(String::cheat_giveMonster, nullptr, Cheat::giveMonster, String::notes_giveMonster));
-        _3gx->Append(new MenuEntry(String::cheat_maxWifiCoins, Cheat::maxWiFiCoins, String::notes_maxWiFiCoins));
+        _3gx->Append(new MenuEntry(String::cheat_unobtainableMonsters, nullptr, Cheat::unobtainableMonsters, String::notes_unobtainableMonsters));
+        _3gx->Append(new MenuEntry(String::cheat_unobtainableContent, nullptr, Cheat::otherUnobtainableContent, String::notes_unobtainableContent));
+        _3gx->Append(new MenuEntry(String::cheat_unlockMethod, nullptr, Cheat::unlockMethod, String::notes_unlockMethod));
+        _3gx->Append(new MenuEntry(String::cheat_maxWifiCoins, Cheat::maxWiFiCoins, Cheat::customWiFiCoins, String::notes_maxWiFiCoins));
 
         _3gx->SynchronizeWithFrame(true);
         _3gx->ShowWelcomeMessage(false);

@@ -19,7 +19,7 @@ struct Monster {
         void write(u32 monsterAddr, Stats& stats);
     };
 
-    const std::string name, iconName;
+    const std::string name, iconName, unlockMethod;
     u16 id;
     std::array<u32, 2> exp;
     u16 skill;
@@ -27,7 +27,7 @@ struct Monster {
     Stats stats;
     u32 checksum;
 
-    Monster(const std::string& name, const std::string& iconName, u16 id, std::array<u32, 2> exp, u16 skill, std::vector<u16> traits, std::array<u16, 6> stats, u32 checksum = 0);
+    Monster(const std::string& name, const std::string& iconName, u16 id, std::array<u32, 2> exp, u16 skill, std::vector<u16> traits, std::array<u16, 6> stats, const std::string& unlockMethod, u32 checksum = 0);
 
     static std::vector<Monster> getMonsters();
     static bool isStorageEmpty();

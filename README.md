@@ -1,5 +1,5 @@
 The goal of this 3GX plugin is to make the game 100% completable for everyone despite the unavailability of certain features.<br>
-This includes the following monsters:<br>
+This includes the following content:<br>
 
 <table>
   <tr style="height:30px;">
@@ -37,6 +37,13 @@ This includes the following monsters:<br>
     </td>
   </tr>
   <tr style="height:30px;">
+    <td><strong>Wi-Fi achivements</strong></td>
+    <td>
+      <img src="https://i.postimg.cc/MTpw9ZYG/fluffy.png" width="30" height="30">
+      <img src="https://i.postimg.cc/rybT9kR8/scruffy.png" width="30" height="30">
+    </td>
+  </tr>
+  <tr style="height:30px;">
     <td><strong>StreetPass</strong></td>
     <td>
       <img src="https://i.postimg.cc/ydXLYbW3/Bevingo-Satan.png" width="30" height="30">
@@ -59,6 +66,18 @@ This includes the following monsters:<br>
       <img src="https://i.postimg.cc/C1Qs1pS1/J3-Rebel-Marine.png" width="30" height="30">
     </td>
   </tr>
+  <tr style="height:30px;">
+    <td><strong>Skills</strong></td>
+    <td>
+      <p>Great East, Wonder West</p>
+    </td>
+  </tr>
+  <tr style="height:30px;">
+    <td><strong>Items</strong></td>
+    <td>
+      <p>Sirloin Voucher, Sirloin Bites</p>
+    </td>
+  </tr>
 </table>
 
 # Prerequisites
@@ -76,4 +95,6 @@ This includes the following monsters:<br>
 - Emulation -> Configure -> System -> tick "Enable 3GX plugin loader" -> OK
 - Start the game, press Select to open the menu
 
-Notes about emulators: Citra 1544, the popular version of Citra for DQMJ3, does not have the Plugin Loader feature, which is why a newer emulator is needed. [Azahar](https://azahar-emu.org) does not work well with DQMJ3P (same slowdowns as latest Citra versions), which is why the Lime3DS fork must be used.
+Notes about emulators: Citra 1544, the popular version of Citra for DQMJ3, does not have the Plugin Loader feature, which is why a newer emulator is needed. [Azahar](https://azahar-emu.org) does not work well with DQMJ3P (same slowdowns as latest Citra versions), which is why the Lime3DS fork must be used.<br>
+
+If you find any unobtainable content that's not in the plugin yet, please DM me on Discord by joining the Discord server!

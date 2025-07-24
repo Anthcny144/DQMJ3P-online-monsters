@@ -4,7 +4,8 @@ using namespace CTRPluginFramework;
 
 enum Addr {
     ARM_SAVE = 0x108008,
-    ARM_WIFI_COIN_ANTICHEAT = 0x662534
+    ARM_WIFI_COIN_ANTICHEAT1 = 0x662534,
+    ARM_WIFI_COIN_ANTICHEAT2 = 0x25BDDC
 };
 
 enum Offset {
@@ -17,6 +18,8 @@ enum Offset {
     LIB_MONSTER = 0x1FB88,
     LIB_SKILL = 0x1FE20,
     LIB_TRAIT = 0x20348,
+    LIB_ITEM = 0x1FD08,
+    INVENTORY = 0x1E04E,
 
     // size
     MONSTER_DATA_SIZE = 0xF0,

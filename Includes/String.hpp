@@ -18,18 +18,33 @@ struct String {
     error,
     noMonster,
 
+    // keyboard
+    kbMonsters,
+    kbOtherContent,
+
+    // unlock methods
+    downloadableDisk,
+    starterTrade,
+    j3Trade,
+    streetPass,
+    spotPass,
+
     // cheats
-    cheat_giveMonster,
-    notes_giveMonster,
+    cheat_unobtainableMonsters,
+    notes_unobtainableMonsters,
+    cheat_unobtainableContent,
+    notes_unobtainableContent,
+    cheat_unlockMethod,
+    notes_unlockMethod,
     cheat_maxWifiCoins,
     notes_maxWiFiCoins;
 
     template<typename T>
-    static std::string plural(T value) {
+    static inline std::string plural(T value) {
         return value == 1 ? "" : "s";
     }
 
-    static std::string gradiant(const std::string& text, Color from, Color to, float firstColWeight = 0.5f) {
+    static inline std::string gradiant(const std::string& text, Color from, Color to, float firstColWeight = 0.5f) {
         std::vector<Color> cols;
         
         for (size_t i = 0; i < text.length(); i++) {
@@ -50,5 +65,9 @@ struct String {
         }
 
         return newText;
+    }
+
+    static inline std::string bold(const std::string& text) {
+        return ToggleDrawMode(Render::BOLD) << text << ToggleDrawMode(Render::BOLD);
     }
 };

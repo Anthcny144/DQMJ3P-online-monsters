@@ -15,6 +15,7 @@ void Game::unlock(Offset unlockType, u16 id) {
         case Offset::LIB_MONSTER:
         case Offset::LIB_SKILL:
         case Offset::LIB_TRAIT:
+        case Offset::LIB_ITEM:
             break;
 
         default:
@@ -30,6 +31,31 @@ void Game::unlock(Offset unlockType, u16 id) {
 
     byte |= (1 << bitOffs);
     Process::Write8(addr, byte);
+}
+
+bool Game::isUnlocked(Offset unlockType, u16 id) {
+    u32 addr;
+    if (!PTR::get(PTRType::SAVE, addr))
+        return false;
+
+    switch (unlockType) {
+        case Offset::LIB_MONSTER:
+        case Offset::LIB_SKILL:
+        case Offset::LIB_TRAIT:
+            break;
+
+        default:
+            return false;
+    }
+
+    u32 byteOffs = id / 8;
+    u32 bitOffs = id % 8;
+    addr += static_cast<u32>(unlockType) + byteOffs;
+
+    u8 byte;
+    Process::Read8(addr, byte);
+
+    return (byte & (1 << bitOffs)) != 0;
 }
 
 void Game::freezeWifiCoins(u16 coins) {
