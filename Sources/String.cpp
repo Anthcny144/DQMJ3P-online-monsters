@@ -22,7 +22,7 @@ String::kbMonsters = String::bold(Color::Red << "Monsters"),
 String::kbOtherContent = String::bold(Color::DodgerBlue << "Other content"),
 
 // unlock methods
-String::downloadableDisk = "Obtained through Downloadable Disks at the WiFi Square.",
+String::downloadableDisk = "Obtained through Downloadable Disks at the Wi-Fi Square.",
 String::starterTrade = "Obtained by trading with a player whose start was this monster.",
 String::j3Trade = "Obtained by trading with DQMJ3 players.",
 String::streetPass = "Obtained through Streetpass distribution.",
@@ -32,9 +32,9 @@ String::spotPass = "Obtained through SpotPass distribution.",
 String::cheat_unobtainableMonsters = String::bold(Color::Red << "Unobtainable monsters"),
 String::cheat_unobtainableContent = String::bold(Color::DodgerBlue << "Unobtainable content"),
 String::cheat_unlockMethod = Color::Silver << "Unlock methods",
-String::notes_unobtainableMonsters = Color::Silver << "Choose a monster to unlock and add to your storage.\n\n" << Color::Orange << "Please note that the generated monsters will be invalid.\nAn invalid monster cannot be used for StreetPass battles nor WiFi battles.\nThe invalidity of a monster will be passed to the child when fused.\nRainbow Fondude born from invalid monsters will also be born as invalid.\n\n" << Color::Silver << "If you want to get rid of the invalidity of a monster, consider buying the monster at the WiFi shop.",
+String::notes_unobtainableMonsters = Color::Silver << "Choose a monster to unlock and add to your storage.\n\n" << Color::Orange << "Please note that the generated monsters will be invalid.\nAn invalid monster cannot be used for StreetPass battles nor Wi-Fi battles.\nThe invalidity of a monster will be passed to the child when fused.\nRainbow Fondude born from invalid monsters will also be born as invalid.\n\n" << Color::Silver << "If you want to get rid of the invalidity of a monster, consider buying the monster at the Wi-Fi shop.",
 String::notes_unobtainableContent = Color::Silver << "Choose the content to unlock and add to your inventory.\n" << Color::Yellow << "Notes: " << Color::Silver << "Selecting " << Color::Brown << "Sirloin Vouchers" << Color::Silver << " will unlock " << Color::Brown << "Sirloin Vouchers & Soirloin Bites" << Color::Silver << " but only " << Color::Brown << "Sirloin Bites" << Color::Silver << " will be added to your inventory.",
 String::notes_unlockMethod = Color::Silver << "Check how each monster & content was unlockable.",
 
-String::cheat_maxWifiCoins = String::bold(Color::Yellow << "Max WiFi Coins"),
-String::notes_maxWiFiCoins = Color::Silver << "Set your WiFi coins to 999, allowing you to buy items and monsters at the WiFi shop.";
+String::cheat_maxWifiCoins = String::bold(Color::Yellow << "Max Wi-Fi Coins"),
+String::notes_maxWiFiCoins = Color::Silver << "Enabling the cheat will set your Wi-Fi Coins to 999\n\nYou can also set a custom amount of each coin by pressing the white keyboard next to the " << Color::DodgerBlue << "[i]" << Color::Silver << " button.";

@@ -58,8 +58,8 @@ std::vector<Monster> Monster::getMonsters() {
         Monster("Starkers", "starkers", 0x369, {1250, 439}, 0x146, {Monster::SMALL, 0x1D7, 0xCD}, {98, 60, 48, 23, 42, 65}, String::starterTrade),
         Monster("Tiko", "tiko", 0x2E5, {1912, 676}, 0x20B, {Monster::SMALL, 0xC9, 0x93}, {112, 52, 21, 44, 59, 63}, String::downloadableDisk, 0x81C4CBF4),
         Monster("Kukri", "kukri", 0x34B, {265, 100}, 0x20B, {Monster::SMALL, 0xC3, 0x92}, {86, 60, 21, 47, 77, 85}, String::downloadableDisk, 0x2D787476),
-        Monster("Fluffy", "fluffy", 0x314, {1912, 676}, 0x213, {Monster::SMALL, 0xC2, 0xC9}, {101, 46, 50, 39, 56, 40}, "Obtained after inspecting the 2 states of the left at WiFi Square once you:\n- used 30 tickets for Master GP / Challenger\n- won 30 WiFi matches"),
-        Monster("Scruffy", "scruffy", 0x315, {2010, 700}, 0x213, {Monster::SMALL, 0xC3, 0xC4}, {93, 50, 47, 24, 64, 64}, "Obtained after inspecting the 2 statues on the right at WiFi Square once you:\n- spent 30 Platinum / Gold WiFi coins\n- won 30 StreetPass matches"),
+        Monster("Fluffy", "fluffy", 0x314, {1912, 676}, 0x213, {Monster::SMALL, 0xC2, 0xC9}, {101, 46, 50, 39, 56, 40}, "Obtained after inspecting the 2 states of the left at Wi-Fi Square once you:\n- used 30 tickets for Master GP / Challenger\n- won 30 Wi-Fi matches"),
+        Monster("Scruffy", "scruffy", 0x315, {2010, 700}, 0x213, {Monster::SMALL, 0xC3, 0xC4}, {93, 50, 47, 24, 64, 64}, "Obtained after inspecting the 2 statues on the right at Wi-Fi Square once you:\n- spent 30 Platinum / Gold Wi-Fi coins\n- won 30 StreetPass matches"),
         Monster("Numen", "numen", 0x2CF, {2010, 700}, 0x202, {Monster::NORMAL, 0xDB, 0xB9}, {117, 49, 62, 62, 57, 78}, String::downloadableDisk, 0xBBE9EE08),
         Monster("Leokid", "leokid", 0x342, {631, 237}, 0x154, {Monster::SMALL, 0xC, 1}, {99, 23, 53, 31, 45, 32}, String::downloadableDisk, 0x1D409934),
         Monster("J3-Rebel Axel", "axel", 0x1E0, {894, 327}, 0xE, {Monster::NORMAL, 0x21, 1}, {95, 44, 58, 38, 102, 54}, String::j3Trade),
@@ -130,7 +130,7 @@ void Monster::addMonsterToStorage(Monster& monster) {
     Process::Write16(addr, idx);
     Process::Write16(addr + Offset::MSTR_ID, monster.id);
     Process::WriteString(addr + Offset::MSTR_NAME, monster.name.substr(0, 8), StringFormat::Utf16);
-    Game::unlock(Offset::LIB_MONSTER, monster.id);
+    Game::unlock(Offset::LIB_MONSTERS, monster.id);
 
     // stats
     monster.stats.write(addr, monster.stats);
@@ -142,13 +142,13 @@ void Monster::addMonsterToStorage(Monster& monster) {
 
     // skill
     Process::Write16(addr + Offset::MSTR_SKILL, monster.skill);
-    Game::unlock(Offset::LIB_SKILL, monster.skill);
+    Game::unlock(Offset::LIB_SKILLS, monster.skill);
     Process::Write16(addr + Offset::MSTR_SKILL_PTS, 9);
 
     // traits
     for (size_t i = 0; i < monster.traits.size(); i++) {
         Process::Write16(addr + Offset::MSTR_TRAITS + i * sizeof(u16), monster.traits[i]);
-        Game::unlock(Offset::LIB_TRAIT, monster.traits[i]);
+        Game::unlock(Offset::LIB_TRAITS, monster.traits[i]);
     }
 
     // checksum

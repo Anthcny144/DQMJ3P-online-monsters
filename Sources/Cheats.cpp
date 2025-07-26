@@ -66,6 +66,7 @@ void Cheat::otherUnobtainableContent(MenuEntry* entry) {
     }
 
     Cheat::initMembers();
+    Cheat::sirloinPatch();
 
     Keyboard kb(String::bold(CenterAlign("\nChoose the content to unlock!")));
     kb.Populate(Cheat::contentNames);
@@ -79,29 +80,34 @@ void Cheat::otherUnobtainableContent(MenuEntry* entry) {
     Offset unlockType = Content::typeUnlockOffsets[content.type];
 
     // lib unlock
-    Game::unlock(unlockType, content.unlockId);
-    if (content.type == Content::Type::ITEM)
-        Game::unlock(unlockType, content.itemId);
+    if (content.unlockableOnce && Game::isUnlocked(unlockType, content.firstId)) {
+        MessageBoxPlus::wrap(String::error, content.name << Color::Silver << " can be obtained only once, and you already unlocked it!");
+        return;
+    }
+    else
+        Game::unlock(unlockType, content.firstId);
 
-    // give item
-    if (content.itemId != 0) {
-        PTR::get(PTRType::SAVE, addr);
-        addr += Offset::INVENTORY;
-        addr += ((content.itemId - 1) * sizeof(u16));
+    PTR::get(PTRType::SAVE, addr);
+    addr += Offset::INVENTORY;
 
-        u16 count;
-        Process::Read16(addr, count);
-        Process::Write16(addr, std::min(static_cast<u16>(count + 1), static_cast<u16>(Macro::MAX_ITEM_COUNT)));
-
-        // special case for Sirloin Vouchers
-        if (content.unlockId == 0x43) {
-            MessageBoxPlus::wrap(String::success, Color::Brown << "Sirloin Vouchers & Sirloin Bites" << Color::Silver << " have been unlocked in the library!\n\n" << Color::Orange << "Important:" << Color::Silver << " Because of some weird anti-cheat, the items were not added to your inventory.");
-            goto ask;
-        }
+    // give main item for item types
+    if (content.type == Content::Type::ITEM) {
+        addr += ((content.firstId - 1) * sizeof(u16));
+        MessageBoxPlus::wrap(String::success,
+        content.name << Color::Silver << " has been unlocked in the library and added to your inventory!");
     }
 
-    MessageBoxPlus::wrap(String::success,
-    content.name << Color::Silver << " has been unlocked in the library!\n" << Color::Yellow << "1x " << content.itemName << Color::Silver << " was added to your inventory!");
+    // give secondary item for other types
+    if (content.secondId != 0) {
+        addr += ((content.secondId - 1) * sizeof(u16));
+        MessageBoxPlus::wrap(String::success,
+        content.name << Color::Silver << " has been unlocked in the library!\n" << Color::Yellow << "1x " << content.itemName << Color::Silver << " was added to your inventory!");
+    }
+
+    u16 count;
+    Process::Read16(addr, count);
+    Process::Write16(addr, std::min(static_cast<u16>(count + 1), static_cast<u16>(Macro::MAX_ITEM_COUNT)));
+
     goto ask;
 }
 
@@ -183,15 +189,21 @@ void Cheat::initMembers() {
 }
 
 void Cheat::wiFiCoinPatch() {
-    Process::Patch(Addr::ARM_WIFI_COIN_ANTICHEAT1, 0xEA000040);
-    Process::Patch(Addr::ARM_WIFI_COIN_ANTICHEAT2, Macro::BX_LR);
+    Process::Write32(Addr::ARM_WIFI_COIN_ANTICHEAT1, 0xEA000040);
+    Process::Write32(Addr::ARM_WIFI_COIN_ANTICHEAT2, Macro::BX_LR);
+}
+
+void Cheat::sirloinPatch() {
+    Process::Write32(Addr::ARM_SIRLOIN_ANTICHEAT1, Macro::BX_LR);
+    Process::Write32(Addr::ARM_SIRLOIN_ANTICHEAT2, Macro::NOP);
+    Process::Write32(Addr::ARM_SIRLOIN_ANTICHEAT3, Macro::NOP);
 }
 
 std::string Cheat::unobtainableMonstersMsgboxText(bool single) {
     std::string monsterMonsters = single ? "monster" : "monsters",
                 itThem = single ? "it" : "them",
                 hasHave = single ? "has" : "have";
-    return (hasHave << " been unlocked and and added to your storage!\n\n" << Color::Orange << "WARNING!" << Color::Silver << " The generated " << monsterMonsters << (single ? " is an " : "are ") << Color::Red << "invalid monster" << (single ? "" : "s") << Color::Silver << ". If you want " << itThem << " to be valid, you need to buy " << itThem << " at the WiFi shop.\nCheck the cheat notes for more info about invalid monsters.");
+    return (hasHave << " been unlocked and and added to your storage!\n\n" << Color::Orange << "WARNING!" << Color::Silver << " The generated " << monsterMonsters << (single ? " is an " : "are ") << Color::Red << "invalid monster" << (single ? "" : "s") << Color::Silver << ". If you want " << itThem << " to be valid, you need to buy " << itThem << " at the Wi-Fi shop.\nCheck the cheat notes for more info about invalid monsters.");
 }
 
 void Cheat::maxWiFiCoins(MenuEntry* entry) {

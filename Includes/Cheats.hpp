@@ -21,5 +21,6 @@ struct Cheat {
 
     static void initMembers();
     static void wiFiCoinPatch();
+    static void sirloinPatch();
     static std::string unobtainableMonstersMsgboxText(bool single);
 };

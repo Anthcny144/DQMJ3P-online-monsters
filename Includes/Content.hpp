@@ -11,9 +11,10 @@ struct Content {
 
     const std::string name, itemName, unlockMethod;
     Content::Type type;
-    u16 unlockId, itemId;
+    u16 firstId, secondId;
+    bool unlockableOnce;
 
-    Content(const std::string& name, Content::Type type, u16 unlockId, u16 itemId, const std::string& itemName, const std::string& unlockMethod);
+    Content(const std::string& name, Content::Type type, u16 firstId, u16 secondId, bool unlockableOnce, const std::string& itemName, const std::string& unlockMethod);
 
     static std::unordered_map<Type, Offset> typeUnlockOffsets;
     static std::vector<Content> getContent();

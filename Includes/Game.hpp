@@ -8,4 +8,7 @@ struct Game {
     static bool isUnlocked(Offset unlockType, u16 id);
     static void freezeWifiCoins(u16 coins);
     static bool checkStorageSpace(u16 space);
+
+    private:
+    static bool isOffsetLibUnlock(Offset offset);
 };

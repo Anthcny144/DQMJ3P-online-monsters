@@ -11,16 +11,8 @@ void Game::unlock(Offset unlockType, u16 id) {
     if (!PTR::get(PTRType::SAVE, addr))
         return;
 
-    switch (unlockType) {
-        case Offset::LIB_MONSTER:
-        case Offset::LIB_SKILL:
-        case Offset::LIB_TRAIT:
-        case Offset::LIB_ITEM:
-            break;
-
-        default:
-            return;
-    }
+    if (!Game::isOffsetLibUnlock(unlockType))
+        return;
 
     u32 byteOffs = id / 8;
     u32 bitOffs = id % 8;
@@ -38,15 +30,8 @@ bool Game::isUnlocked(Offset unlockType, u16 id) {
     if (!PTR::get(PTRType::SAVE, addr))
         return false;
 
-    switch (unlockType) {
-        case Offset::LIB_MONSTER:
-        case Offset::LIB_SKILL:
-        case Offset::LIB_TRAIT:
-            break;
-
-        default:
-            return false;
-    }
+    if (!Game::isOffsetLibUnlock(unlockType))
+        return true;
 
     u32 byteOffs = id / 8;
     u32 bitOffs = id % 8;
@@ -56,6 +41,21 @@ bool Game::isUnlocked(Offset unlockType, u16 id) {
     Process::Read8(addr, byte);
 
     return (byte & (1 << bitOffs)) != 0;
+}
+
+bool Game::isOffsetLibUnlock(Offset offset) {
+    switch (offset) {
+        case Offset::LIB_MONSTERS:
+        case Offset::LIB_SKILLS:
+        case Offset::LIB_ABILITIES:
+        case Offset::LIB_TRAITS:
+        case Offset::LIB_ITEMS:
+        case Offset::LIB_TITLES:
+            return true;
+
+        default:
+            return false;
+    }
 }
 
 void Game::freezeWifiCoins(u16 coins) {

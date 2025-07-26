@@ -32,7 +32,7 @@ namespace CTRPluginFramework {
     }
 
     int main() {
-        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 2, 1, 0, String::_3gxNotes);
+        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 2, 1, 1, String::_3gxNotes);
         settings.open("settings.bin");
 
         _3gx->Append(new MenuEntry(String::cheat_unobtainableMonsters, nullptr, Cheat::unobtainableMonsters, String::notes_unobtainableMonsters));

@@ -1,3 +1,4 @@
+# DQMJ3P - Unobtainable content
 The goal of this 3GX plugin is to make the game 100% completable for everyone despite the unavailability of certain features.<br>
 This includes the following content:<br>
 
@@ -69,13 +70,13 @@ This includes the following content:<br>
   <tr style="height:30px;">
     <td><strong>Skills</strong></td>
     <td>
-      <p>Great East, Wonder West</p>
+      <p>Great East, Wonder West, Vivacious Maiden of the East, Maiden of the Windy West" skills</p>
     </td>
   </tr>
   <tr style="height:30px;">
     <td><strong>Items</strong></td>
     <td>
-      <p>Sirloin Voucher, Sirloin Bites</p>
+      <p>Sirloin Voucher (therefore Sirloin Bites)</p>
     </td>
   </tr>
 </table>
