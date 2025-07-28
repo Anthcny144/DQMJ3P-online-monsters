@@ -9,3 +9,7 @@ struct MessageBoxPlus {
 struct CustomIconPlus {
     static CustomIcon loadIcon(const std::string& path);
 };
+
+struct ColorPlus {
+    static const Color bronzeTitle, silverTitle, goldTitle;
+};

@@ -8,7 +8,7 @@ bool PTR::get(PTRType type, u32& outAddr) {
 
     switch (type) {
         case PTRType::SAVE:
-            offsets = {Addr::ARM_SAVE, 0, 4};
+            offsets = {ARM::SAVE, 0, 4};
             break;
 
         default:

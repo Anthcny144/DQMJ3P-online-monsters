@@ -5,43 +5,57 @@ using namespace CTRPluginFramework;
 struct String {
     static const std::string
 
-    // global
+    // yes no
+    yes, no,
+
+    // game names
+    dqmj3p, dqmj3,
+
+    // about
     discordLink,
-    _3gxTitle,
-    _3gxNotes,
+
+    // main 3gx
+    _3gxTitle, _3gxNotes,
     welcome,
     pressSelect,
 
-    // messagebox
-    success,
-    warning,
-    error,
+    // 3gx cheats
+    cheat_unobtainableContent, notes_unobtainableContent,
+    cheat_wiFiCoins, notes_wiFiCoins,
+
+    // global messagebox
+    success, warning, error,
+
+    // invalid version messagebox
+    j3NotCompatible,
+    wrongGame,
+    noUpdate,
+    unusableVersion,
+
+    // cheat messagebox
+    all,
     noMonster,
+    unlockedSkills, unlockedItems, unlockedTitles,
 
     // keyboard
-    kbMonsters,
-    kbOtherContent,
+    chooseCategory, categoryMonsters, categorySkills, categoryItems, categoryTitles,
+    chooseMonsterUnlock, chooseSkillUnlock, chooseItemUnlock, chooseTitleUnlock,
+    coinAdd,
 
-    // unlock methods
+    // basic unlock methods
     downloadableDisk,
-    starterTrade,
-    j3Trade,
-    streetPass,
-    spotPass,
+    starterTrade, j3Trade,
+    streetPass, spotPass,
+    unlockFluffy, unlockScruffy, unlockRobbinLadies,
 
-    // cheats
-    cheat_unobtainableMonsters,
-    notes_unobtainableMonsters,
-    cheat_unobtainableContent,
-    notes_unobtainableContent,
-    cheat_unlockMethod,
-    notes_unlockMethod,
-    cheat_maxWifiCoins,
-    notes_maxWiFiCoins;
+    // coin names
+    bronzeCoin, silverCoin, goldCoin, platinumCoin,
+
+    empty;
 
     template<typename T>
     static inline std::string plural(T value) {
-        return value == 1 ? "" : "s";
+        return (value == 0 || value == 1) ? "" : "s";
     }
 
     static inline std::string gradiant(const std::string& text, Color from, Color to, float firstColWeight = 0.5f) {

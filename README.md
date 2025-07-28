@@ -70,13 +70,19 @@ This includes the following content:<br>
   <tr style="height:30px;">
     <td><strong>Skills</strong></td>
     <td>
-      <p>Great East, Wonder West, Vivacious Maiden of the East, Maiden of the Windy West" skills</p>
+      <p>Great East, Wonder West, Vivacious Maiden of the East, Maiden of the Windy West</p>
     </td>
   </tr>
   <tr style="height:30px;">
     <td><strong>Items</strong></td>
     <td>
       <p>Sirloin Voucher (therefore Sirloin Bites)</p>
+    </td>
+  </tr>
+  <tr style="height:30px;">
+    <td><strong>Titles</strong></td>
+    <td>
+      <p>Network Rookie, Network Master, Network Champ, Star Warrior, Nova Star Warrior, Galactic Warrior, Large Galactic Warrior, Universal Warrior, Cosmic Warrior, Contact Rookie, Contact Veteran, Contact Elite, MGP PArticipant, MGP Best 10.000, MGP Best 1000, MGP Best 8, MGP Champion, CGP Participant, CGP Best 10.000, CGP Best 1000, CGP Best 100, CGP Best 8, CGP Champion, Owner Rookie, Owner Veteran, Owner Elite</p>
     </td>
   </tr>
 </table>
@@ -86,16 +92,17 @@ This includes the following content:<br>
 - Download the zip archive in [Releases](https://github.com/Anthcny144/DQMJ3P-unobtainable-monsters/releases)
 
 # Installing on 3DS
-- Put the content of the zip file at `SD:\luma\plugins\00040000001ACB00\`
+- Put the content of the zip file at the root of your SD card, replace files if asked to
 - Enable plugin loader: on the home menu, press L+Down+Select, toggle on "Plugin Loader"
 - Start the game, press Select to open the menu
 
 # Installing on Emulator
 - Download the [Lime3DS DQMJ3P fork](https://github.com/Lurpigi/lime3ds-dqmj3p/releases)
 - If needed, reinstall the game and transfer your save file (Right click -> Open -> Save Data Location, the game must have been launched at least 1 time for this to show up)
+- File -> Open Lime3DS Folder, put the content of the zip file in the `sdmc` folder (create it if it doesn't exist), replace files if asked to
 - Emulation -> Configure -> System -> tick "Enable 3GX plugin loader" -> OK
-- Start the game, press Select to open the menu
+- Retart the game, press Select to open the menu
 
 Notes about emulators: Citra 1544, the popular version of Citra for DQMJ3, does not have the Plugin Loader feature, which is why a newer emulator is needed. [Azahar](https://azahar-emu.org) does not work well with DQMJ3P (same slowdowns as latest Citra versions), which is why the Lime3DS fork must be used.<br>
 
-If you find any unobtainable content that's not in the plugin yet, please DM me on Discord by joining the Discord server!
+If you find any unobtainable content that's not in the plugin yet, or if the plugin doesn't work for unknown reasons, please DM (@anthcny) me on Discord by joining the [Discord server](https://discord.com/invite/W5yRJpDd5e)!

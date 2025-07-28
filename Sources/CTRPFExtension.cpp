@@ -29,3 +29,7 @@ CustomIcon CustomIconPlus::loadIcon(const std::string& path) {
                       fileOk ? y : 0,
                       true);
 }
+
+const Color ColorPlus::bronzeTitle = Color(0xCC7722FF),
+            ColorPlus::silverTitle = Color(0xAAAAAAFF),
+            ColorPlus::goldTitle = Color(0xFFFF11FF);

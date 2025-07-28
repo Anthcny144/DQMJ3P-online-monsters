@@ -2,13 +2,15 @@
 #include <CTRPluginFramework.hpp>
 using namespace CTRPluginFramework;
 
-enum Addr {
-    ARM_SAVE = 0x108008,
-    ARM_WIFI_COIN_ANTICHEAT1 = 0x662534,
-    ARM_WIFI_COIN_ANTICHEAT2 = 0x25BDDC,
-    ARM_SIRLOIN_ANTICHEAT1 = 0x22983C,
-    ARM_SIRLOIN_ANTICHEAT2 = 0x6B2AE4,
-    ARM_SIRLOIN_ANTICHEAT3 = 0x6B2AF0,
+struct ARM {
+    enum Addr {
+        SAVE = 0x10532C, // 0x108008,
+        WIFI_COIN_ANTICHEAT1 = 0x662534,
+        WIFI_COIN_ANTICHEAT2 = 0x25BDDC,
+        SIRLOIN_ANTICHEAT1 = 0x22983C,
+        SIRLOIN_ANTICHEAT2 = 0x6B2AE4,
+        SIRLOIN_ANTICHEAT3 = 0x6B2AF0,
+    };
 };
 
 enum Offset {
