@@ -9,7 +9,7 @@ using namespace CTRPluginFramework;
 
 bool Storage::isEmpty() {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return true;
 
     return *(u32 *)(addr + Offset::FREE_INDEX) == 0;
@@ -17,7 +17,7 @@ bool Storage::isEmpty() {
 
 bool Storage::isSpaceAvailable(u16 space) {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return false;
 
     addr += Offset::STORAGE_DATA;
@@ -41,7 +41,7 @@ bool Storage::isFreeSpaceAddr(u32 addr) {
 
 u32 Storage::getFreeSpaceAddr() {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return 0;
 
     addr += Offset::STORAGE_DATA;
@@ -57,7 +57,7 @@ u32 Storage::getFreeSpaceAddr() {
 
 u32 Storage::getNextFreeIdx() {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return 0;
 
     return *(u32 *)(addr + Offset::FREE_INDEX);
@@ -65,7 +65,7 @@ u32 Storage::getNextFreeIdx() {
 
 void Storage::increaseNextFreeAddr() {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return;
 
     u32 idx = Storage::getNextFreeIdx();
@@ -113,7 +113,7 @@ bool Storage::addMonster(Monster& monster) {
     }
 
     // checksum
-    PTR::get(PTRType::SAVE, addr);
+    PTR::get(PTR::Type::SAVE, addr);
     if (monster.checksum != 0) {
         for (size_t i = 0; i < Macro::MAX_DISC_CLEARED_DATA_SIZE; i++) {
             u16 spot;
@@ -135,7 +135,7 @@ bool Storage::addMonster(Monster& monster) {
 
 bool Storage::isInStorage(Monster& monster) {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return true;
 
     addr += Offset::STORAGE_DATA;

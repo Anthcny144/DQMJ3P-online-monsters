@@ -2,12 +2,12 @@
 #include "Memory.hpp"
 using namespace CTRPluginFramework;
 
-bool PTR::get(PTRType type, u32& outAddr) {
+bool PTR::get(PTR::Type type, u32& outAddr) {
     u32 addr = 0;
     std::vector<u32> offsets;
 
     switch (type) {
-        case PTRType::SAVE:
+        case PTR::Type::SAVE:
             offsets = {ARM::SAVE, 0, 4};
             break;
 

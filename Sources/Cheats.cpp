@@ -20,7 +20,7 @@ std::vector<std::string> Cheat::skillNames, Cheat::itemNames, Cheat::titleNames;
 
 void Cheat::otherUnobtainableContent(MenuEntry* entry) {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr) || Storage::isEmpty()) {
+    if (!PTR::get(PTR::Type::SAVE, addr) || Storage::isEmpty()) {
         MessageBoxPlus::wrap(String::error, String::noMonster);
         return;
     }
@@ -195,7 +195,7 @@ void Cheat::otherUnobtainableContent(MenuEntry* entry) {
 
 void Cheat::wiFiCoins(MenuEntry* entry) {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return;
 
     static std::array<std::string, 4> coinNames = {String::bronzeCoin, String::silverCoin, String::goldCoin, String::platinumCoin};

@@ -7,7 +7,7 @@ using namespace CTRPluginFramework;
 
 bool Game::unlock(Offset unlockType, u16 id) {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return false;
 
     if (!Game::isOffsetLibUnlock(unlockType))
@@ -30,7 +30,7 @@ bool Game::unlock(Offset unlockType, u16 id) {
 
 bool Game::isUnlocked(Offset unlockType, u16 id) {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return false;
 
     if (!Game::isOffsetLibUnlock(unlockType))
@@ -63,7 +63,7 @@ bool Game::isOffsetLibUnlock(Offset offset) {
 
 void Game::increaseItemCount(u16 itemId) {
     u32 addr;
-    if (!PTR::get(PTRType::SAVE, addr))
+    if (!PTR::get(PTR::Type::SAVE, addr))
         return;
 
     u16 count;

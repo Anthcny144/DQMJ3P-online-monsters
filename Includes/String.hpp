@@ -18,6 +18,7 @@ struct String {
     _3gxTitle, _3gxNotes,
     welcome,
     pressSelect,
+    updateCheckError, homeMenu,
 
     // 3gx cheats
     cheat_unobtainableContent, notes_unobtainableContent,

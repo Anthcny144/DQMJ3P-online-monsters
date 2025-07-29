@@ -20,6 +20,8 @@ String::_3gxTitle = String::bold(String::dqmj3p << Color::Silver << " Unobtainab
 String::_3gxNotes = Color::Silver << "This plugin's goal is to unlock monsters locked behind online, StreetPass and trading features\n\nPlugin made by " << Color::Yellow << "Anthcny" << Color::Silver << "\nIf you encounter any issue, please report it on the DQMJ3P Discord server!\n\nDQMJ3P Discord server:\n" << discordLink,
 String::welcome = String::gradiant("Plugin ready!", Color::Purple, Color::Yellow, 0.75f),
 String::pressSelect = "Press Select to open the menu!",
+String::updateCheckError = Color::Silver << "An unexpected error occured while checking for the " << Color::Yellow << "1.3 update" << Color::Silver << "'s presence on the SD card.\n\nIf the update is not installed, please make sure to install it, otherwise the plugin will not work.\n\nIf you think this is a mistake, please continue.\n\nLaunch the plugin anyway?",
+String::homeMenu = Color::Silver << "You will return to the Home Menu.",
 
 // 3gx cheats
 String::cheat_unobtainableContent = String::bold(String::gradiant("Unobtainable content", Color::Red, Color::Blue)),
@@ -35,7 +37,7 @@ String::error = String::bold(Color::Red << "Error"),
 // invalid game / version messagebox
 String::j3NotCompatible = Color::Silver << "This plugin is not compatible with " << String::dqmj3 << Color::Silver << " (yet)!",
 String::wrongGame = Color::Silver << "This is a plugin for " << String::dqmj3p << Color::Silver << "!",
-String::noUpdate = Color::Silver << "Yopu need the " << Color::Yellow << "1.3 update" << Color::Silver << " in order to use this plugin!",
+String::noUpdate = Color::Silver << "You need the " << Color::Yellow << "1.3 update" << Color::Silver << " in order to use this plugin!",
 String::unusableVersion = Color::Silver << "It looks like you have a modified version of the game that cannot be used with this plugin\n\nYou must either use:\n- Unmodified japanese with 1.3 update\n- English-patched with 1.3 update",
 
 // cheat messagebox

@@ -11,7 +11,7 @@ namespace CTRPluginFramework {
     const Screen& top = OSD::GetTopScreen();
 
     void PatchProcess(FwkSettings& fwk) {
-        fwk.WaitTimeToBoot = Seconds(12);
+        fwk.WaitTimeToBoot = Seconds(15);
         fwk.Notifications.LifeSpan = Seconds(8);
     }
 
@@ -32,35 +32,11 @@ namespace CTRPluginFramework {
         return true;
     }
 
-    bool checkVersion() {
-        if (GameTitle::isJ3()) {
-            MessageBoxPlus::wrap(String::error, String::j3NotCompatible);
-            return false;
-        }
-
-        if (!GameTitle::isJ3P()) {
-            MessageBoxPlus::wrap(String::error, String::wrongGame);
-            return false;
-        }
-
-        if (!GameTitle::isVer13()) {
-            MessageBoxPlus::wrap(String::error, String::noUpdate);
-            return false;
-        }
-
-        if (!GameTitle::isValidVersion()) {
-            MessageBoxPlus::wrap(String::error, String::unusableVersion);
-            return false;
-        }
-
-        return true;
-    }
-
     int main() {
-        if (!checkVersion())
+        if (!GameTitle::check())
             return 0;
 
-        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 3, 0, 0, String::_3gxNotes);
+        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 3, 0, 1, String::_3gxNotes);
 
         settings.open(SETTINGS_BIN);
 

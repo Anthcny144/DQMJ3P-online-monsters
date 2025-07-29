@@ -50,10 +50,10 @@ enum Offset {
     MSTR_TRAITS = 0x44
 };
 
-enum PTRType {
-    SAVE
-};
-
 struct PTR {
-    static bool get(PTRType type, u32& outAddr);
+    enum class Type {
+        SAVE
+    };
+
+    static bool get(PTR::Type type, u32& outAddr);
 };
