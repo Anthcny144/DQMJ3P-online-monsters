@@ -1,6 +1,7 @@
 #include <CTRPluginFramework.hpp>
 #include "Cheats.hpp"
 #include "CTRPFExtension.hpp"
+#include "Game.hpp"
 #include "GameTitle.hpp"
 #include "Macro.hpp"
 #include "Settings.hpp"
@@ -11,7 +12,7 @@ namespace CTRPluginFramework {
     const Screen& top = OSD::GetTopScreen();
 
     void PatchProcess(FwkSettings& fwk) {
-        fwk.WaitTimeToBoot = Seconds(15);
+        fwk.WaitTimeToBoot = Seconds(10);
         fwk.Notifications.LifeSpan = Seconds(8);
     }
 
@@ -36,11 +37,15 @@ namespace CTRPluginFramework {
         if (!GameTitle::check())
             return 0;
 
-        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 3, 0, 1, String::_3gxNotes);
+        while (!Game::isLoaded())
+            Sleep(Seconds(0.2));
+
+        PluginMenu *_3gx = new PluginMenu(String::_3gxTitle, 3, 1, 0, String::_3gxNotes);
 
         settings.open(SETTINGS_BIN);
 
-        _3gx->Append(new MenuEntry(String::cheat_unobtainableContent, nullptr, Cheat::otherUnobtainableContent, String::notes_unobtainableContent));
+        _3gx->Append(new MenuEntry(String::cheat_unobtainableContent, nullptr, Cheat::unobtainableContent, String::notes_unobtainableContent));
+        _3gx->Append(new MenuEntry(String::cheat_grandEstarkEventFix, nullptr, Cheat::grandEstarkEventFix, String::notes_grandEstarkEventFix));
         _3gx->Append(new MenuEntry(String::cheat_wiFiCoins, nullptr, Cheat::wiFiCoins, String::notes_wiFiCoins));
 
         _3gx->SynchronizeWithFrame(true);
@@ -49,11 +54,9 @@ namespace CTRPluginFramework {
         _3gx->Callback(loop);
         _3gx->OnOpening = onOpen;
 
-        if (settings.has("opened"))
-            OSD::Notify(String::welcome);
-
         Cheat::init();
-
+        OSD::Notify(String::welcome);
+        
         _3gx->Run();
         delete _3gx;
         return 0;

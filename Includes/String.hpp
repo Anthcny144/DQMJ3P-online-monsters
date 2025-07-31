@@ -22,6 +22,7 @@ struct String {
 
     // 3gx cheats
     cheat_unobtainableContent, notes_unobtainableContent,
+    cheat_grandEstarkEventFix, notes_grandEstarkEventFix,
     cheat_wiFiCoins, notes_wiFiCoins,
 
     // global messagebox
@@ -37,6 +38,7 @@ struct String {
     all,
     noMonster,
     unlockedSkills, unlockedItems, unlockedTitles,
+    estarkAlreadyDone, estarkNot5Items, estarkRoryBellows, estarkFixed,
 
     // keyboard
     chooseCategory, categoryMonsters, categorySkills, categoryItems, categoryTitles,
@@ -45,9 +47,10 @@ struct String {
 
     // basic unlock methods
     downloadableDisk,
-    starterTrade, j3Trade,
+    starterTrade, j3Transfer,
     streetPass, spotPass,
-    unlockFluffy, unlockScruffy, unlockRobbinLadies,
+    // unlockFluffy, unlockScruffy,
+    unlockRobbinLadies,
 
     // coin names
     bronzeCoin, silverCoin, goldCoin, platinumCoin,

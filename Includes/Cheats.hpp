@@ -5,10 +5,14 @@
 using namespace CTRPluginFramework;
 
 struct Cheat {
-    static void otherUnobtainableContent(MenuEntry* entry);
+    static void init();
+
+    static void unobtainableContent(MenuEntry* entry);
+    static void grandEstarkEventFix(MenuEntry* entry);
     static void wiFiCoins(MenuEntry* entry);
 
-    static void init();
+    static void j3Transfer(Item* item = nullptr);
+    static void fluffyScruffyBooks(Item* item);
     
     static std::vector<CustomIcon> monsterIcons, coinIcons;
     static std::vector<Monster> monsters;

@@ -31,10 +31,10 @@ This includes the following content:<br>
   <tr style="height:30px;">
     <td><strong>Starters</strong></td>
     <td>
-      <img src="https://i.postimg.cc/c4VL093c/Slider-Kids.png" width="30" height="30">
-      <img src="https://i.postimg.cc/4dT8Gg4T/Poon.png" width="30" height="30">
-      <img src="https://i.postimg.cc/nrTZ72SC/Zoma-s-Devil.png" width="30" height="30">
       <img src="https://i.postimg.cc/6pFKdycL/Starkers.png" width="30" height="30">
+      <img src="https://i.postimg.cc/nrTZ72SC/Zoma-s-Devil.png" width="30" height="30">
+      <img src="https://i.postimg.cc/4dT8Gg4T/Poon.png" width="30" height="30">
+      <img src="https://i.postimg.cc/c4VL093c/Slider-Kids.png" width="30" height="30">
     </td>
   </tr>
   <tr style="height:30px;">
@@ -42,6 +42,7 @@ This includes the following content:<br>
     <td>
       <img src="https://i.postimg.cc/MTpw9ZYG/fluffy.png" width="30" height="30">
       <img src="https://i.postimg.cc/rybT9kR8/scruffy.png" width="30" height="30">
+      <p>(via their 2 books)</p>
     </td>
   </tr>
   <tr style="height:30px;">
@@ -60,7 +61,7 @@ This includes the following content:<br>
     </td>
   </tr>
   <tr style="height:30px;">
-    <td><strong>DQMJ3 trade-only</strong></td>
+    <td><strong>DQMJ3 transfer</strong></td>
     <td>
       <img src="https://i.postimg.cc/MHg5s2F4/J3-Rebel-Axel.png" width="30" height="30">
       <img src="https://i.postimg.cc/MKjdnHc8/J3-Rebel-Wing.png" width="30" height="30">
@@ -76,7 +77,7 @@ This includes the following content:<br>
   <tr style="height:30px;">
     <td><strong>Items</strong></td>
     <td>
-      <p>Sirloin Voucher (therefore Sirloin Bites)</p>
+      <p>Sirloin Voucher (therefore Sirloin Bites), Accessory Ticket</p>
     </td>
   </tr>
   <tr style="height:30px;">
@@ -86,6 +87,7 @@ This includes the following content:<br>
     </td>
   </tr>
 </table>
+The plugin also features a cheat to fix the Grand Estark event glitch in the english translation, as well as a cheat to get as much Wi-Fi Coins as you want.
 
 # Prerequisites
 - CFW installed (3DS only)
@@ -99,7 +101,7 @@ This includes the following content:<br>
 # Installing on Emulator
 - Download the [Lime3DS DQMJ3P fork](https://github.com/Lurpigi/lime3ds-dqmj3p/releases)
 - If needed, reinstall the game and transfer your save file (Right click -> Open -> Save Data Location, the game must have been launched at least 1 time for this to show up)
-- File -> Open Lime3DS Folder, put the content of the zip file in the `sdmc` folder (create it if it doesn't exist), replace files if asked to
+- File -> Open Lime3DS Folder -> and put the content of the zip file in the `sdmc` folder (create it if it doesn't exist)
 - Emulation -> Configure -> System -> tick "Enable 3GX plugin loader" -> OK
 - Retart the game, press Select to open the menu
 

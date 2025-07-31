@@ -1,5 +1,6 @@
 #include <CTRPluginFramework.hpp>
 #include "CTRPFExtension.hpp"
+#include "Cheats.hpp"
 #include "Content.hpp"
 #include "Memory.hpp"
 #include "String.hpp"
@@ -37,13 +38,13 @@ std::vector<Monster> Monster::get() {
         Monster(String::gradiant("Starkers", Color(0xB95F03FF), Color(0xE49E14FF)), "starkers", 0x369, {1250, 439}, 0x146, {Monster::SMALL, 0x1D7, 0xCD}, {98, 60, 48, 23, 42, 65}, String::starterTrade),
         Monster(String::gradiant("Tiko", Color(0xFCE411FF), Color::White, 0.80f), "tiko", 0x2E5, {1912, 676}, 0x20B, {Monster::SMALL, 0xC9, 0x93}, {112, 52, 21, 44, 59, 63}, String::downloadableDisk, 0x81C4CBF4),
         Monster(String::gradiant("Kukri", Color(0xF4AACBFF), Color::White, 0.80f), "kukri", 0x34B, {265, 100}, 0x20B, {Monster::SMALL, 0xC3, 0x92}, {86, 60, 21, 47, 77, 85}, String::downloadableDisk, 0x2D787476),
-        Monster(String::gradiant("Fluffy", Color(0x728BD4FF), Color(0xD4D4D4FF)), "fluffy", 0x314, {1912, 676}, 0x213, {Monster::SMALL, 0xC2, 0xC9}, {101, 46, 50, 39, 56, 40}, String::unlockFluffy),
-        Monster(String::gradiant("Scruffy", Color(0xE688C4FF), Color(0xF29C84FF)), "scruffy", 0x315, {2010, 700}, 0x213, {Monster::SMALL, 0xC3, 0xC4}, {93, 50, 47, 24, 64, 64}, String::unlockScruffy),
+        // Monster(String::gradiant("Fluffy", Color(0x728BD4FF), Color(0xD4D4D4FF)), "fluffy", 0x314, {1912, 676}, 0x213, {Monster::SMALL, 0xC2, 0xC9}, {101, 46, 50, 39, 56, 40}, String::unlockFluffy),
+        // Monster(String::gradiant("Scruffy", Color(0xE688C4FF), Color(0xF29C84FF)), "scruffy", 0x315, {2010, 700}, 0x213, {Monster::SMALL, 0xC3, 0xC4}, {93, 50, 47, 24, 64, 64}, String::unlockScruffy),
         Monster(String::gradiant("Numen", Color(0xF7BE8BFF), Color::White), "numen", 0x2CF, {2010, 700}, 0x202, {Monster::NORMAL, 0xDB, 0xB9}, {117, 49, 62, 62, 57, 78}, String::downloadableDisk, 0xBBE9EE08),
         Monster(String::gradiant("Leokid", Color(0xFEC610FF), Color(0xC2976DFF)), "leokid", 0x342, {631, 237}, 0x154, {Monster::SMALL, 0xC, 1}, {99, 23, 53, 31, 45, 32}, String::downloadableDisk, 0x1D409934),
-        Monster(String::gradiant("J3-Rebel Axel", Color(0xC5C5B2FF), Color(0x443A3EFF)), "axel", 0x1E0, {894, 327}, 0xE, {Monster::NORMAL, 0x21, 1}, {95, 44, 58, 38, 102, 54}, String::j3Trade),
-        Monster(String::gradiant("J3-Rebel Wing", Color(0xC5C5B2FF), Color(0x443A3EFF)), "wing", 0x1E3, {894, 327}, 0xA, {Monster::NORMAL, 0x20, 1}, {88, 44, 54, 54, 102, 58}, String::j3Trade),
-        Monster(String::gradiant("J3-Rebel Marine", Color(0xC5C5B2FF), Color(0x443A3EFF)), "marine", 0x1E6, {894, 327}, 0x6, {Monster::MEGA, 0x1F, 0x23, 3}, {146, 59, 39, 49, 97, 59}, String::j3Trade),
+        Monster(String::gradiant("J3-Rebel Axel", Color(0xC5C5B2FF), Color(0x443A3EFF)), "axel", 0x1E0, {894, 327}, 0xE, {Monster::NORMAL, 0x21, 1}, {95, 44, 58, 38, 102, 54}, String::j3Transfer),
+        Monster(String::gradiant("J3-Rebel Wing", Color(0xC5C5B2FF), Color(0x443A3EFF)), "wing", 0x1E3, {894, 327}, 0xA, {Monster::NORMAL, 0x20, 1}, {88, 44, 54, 54, 102, 58}, String::j3Transfer),
+        Monster(String::gradiant("J3-Rebel Marine", Color(0xC5C5B2FF), Color(0x443A3EFF)), "marine", 0x1E6, {894, 327}, 0x6, {Monster::MEGA, 0x1F, 0x23, 3}, {146, 59, 39, 49, 97, 59}, String::j3Transfer),
         Monster(String::gradiant("Robbin' Ladies", Color(0x32EEC3FF), Color(0xE30098FF)), "robbin_ladies", 0x34E, {1605, 560}, 0x22D, {Monster::GIGA, 0xB8, 0x90, 0xC3, 4}, {190, 44, 50, 41, 72, 67}, String::unlockRobbinLadies),
         Monster(String::gradiant("Demon Warrior Lugius", Color(0xF7BE8BFF), Color(0x1D2122FF)), "lugius", 0x35F, {265, 100}, 0x212, {Monster::NORMAL, 0xF6, 0x1E0}, {120, 41, 75, 48, 80, 45}, String::downloadableDisk, 0xBF06F924),
         Monster(String::gradiant("Demon Warrior Vera", Color(0x72574CFF), Color(0x1D2122FF)), "vera", 0x360, {2010, 700}, 0x212, {Monster::NORMAL, 0x88, 1}, {108, 44, 67, 34, 82, 35}, String::downloadableDisk, 0xFCCD4A20),
@@ -65,12 +66,17 @@ std::vector<Skill> Skill::get() {
     };
 }
 
-Item::Item(const std::string& name, u16 id, bool unlockableOnce, const std::string& unlockMethod)
-: name(name), id(id), unlockableOnce(unlockableOnce), unlockMethod(unlockMethod) {}
+Item::Item(const std::string& name, u16 id, bool unlockableOnce, const std::string& unlockMethod, std::function<void(Item*)> onUnlock)
+: name(name), id(id), unlockableOnce(unlockableOnce), unlockMethod(unlockMethod), onUnlock(onUnlock) {}
 
 std::vector<Item> Item::get() {
     return {
-        Item(Color::Brown << "Sirloin Voucher", 0x43, true, "Unlockable by inputing the following Gift Code:\n」ちョＵ使Ｍｏ不ｒＥ憎火鬼花エ剣\n\nIt was shown in a japanese strategy guide.")
+        Item(Color::Brown << "Sirloin Voucher", 0x43, true, "Input the following Gift Code:\n」ちョＵ使Ｍｏ不ｒＥ憎火鬼花エ剣\nIt was shown in a japanese strategy guide."),
+        Item(Color::Silver << "Accessory Ticket", 0x3EE, true, "Use the DQMJ3 monster transfer feature and\ninspect the machine in Wook Park behind the\nyellow Fondude.", Cheat::j3Transfer),
+        Item(String::gradiant("Fluffy Book, Volume 1", Color(0x728BD4FF), Color(0xD4D4D4FF)), 0x3E3, true, "Use 30 Masters / Challenges GP tickets and talk to\nthe Terry statue in the Wi-Fi Square.", Cheat::fluffyScruffyBooks),
+        Item(String::gradiant("Fluffy Book, Volume 2", Color(0x728BD4FF), Color(0xD4D4D4FF)), 0x3E4, true, "Win 30 Wi-Fi matches and talk to the Mireille statue\nin the Wi-Fi Square.", Cheat::fluffyScruffyBooks),
+        Item(String::gradiant("Scruffy Book, Volume 1", Color(0xE688C4FF), Color(0xF29C84FF)), 0x3E5, true, "Spend at least 30 Gold and Platinum Coins and\ntalk to the Iru statue in the Wi-Fi Square.", Cheat::fluffyScruffyBooks),
+        Item(String::gradiant("Scruffy Book, Volume 2", Color(0xE688C4FF), Color(0xF29C84FF)), 0x3E6, true, "Win 30 StreetPass matches and talk to the Luca\nstatue in the Wi-Fi Square.", Cheat::fluffyScruffyBooks)
     };
 }
 

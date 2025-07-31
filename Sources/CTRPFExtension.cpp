@@ -2,10 +2,11 @@
 #include "CTRPFExtension.hpp"
 using namespace CTRPluginFramework;
 
-void MessageBoxPlus::wrap(const std::string& title, const std::string& msg, ClearScreen clear, DialogType dialogue) {
+bool MessageBoxPlus::wrap(const std::string& title, const std::string& msg, DialogType dialogue, ClearScreen clear) {
     Sleep(Milliseconds(100));
-    MessageBox(title, msg, dialogue, clear)();
+    bool res = MessageBox(title, msg, dialogue, clear)();
     Sleep(Milliseconds(100));
+    return res;
 }
 
 CustomIcon CustomIconPlus::loadIcon(const std::string& path) {

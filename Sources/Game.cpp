@@ -5,12 +5,20 @@
 #include <vector>
 using namespace CTRPluginFramework;
 
+bool Game::isLoaded() {
+    u32 val;
+    Process::Read32(ARM::Addr::LOADED, val);
+    Process::Read32(val, val);
+
+    return val != 0;
+}
+
 bool Game::unlock(Offset unlockType, u16 id) {
     u32 addr;
     if (!PTR::get(PTR::Type::SAVE, addr))
         return false;
 
-    if (!Game::isOffsetLibUnlock(unlockType))
+    if (!Game::isUnlockOffset(unlockType))
         return false;
 
     if (Game::isUnlocked(unlockType, id))
@@ -33,7 +41,7 @@ bool Game::isUnlocked(Offset unlockType, u16 id) {
     if (!PTR::get(PTR::Type::SAVE, addr))
         return false;
 
-    if (!Game::isOffsetLibUnlock(unlockType))
+    if (!Game::isUnlockOffset(unlockType))
         return true;
 
     u32 byteOffs = id / 8;
@@ -46,7 +54,7 @@ bool Game::isUnlocked(Offset unlockType, u16 id) {
     return (byte & (1 << bitOffs)) != 0;
 }
 
-bool Game::isOffsetLibUnlock(Offset offset) {
+bool Game::isUnlockOffset(Offset offset) {
     switch (offset) {
         case Offset::LIB_MONSTERS:
         case Offset::LIB_SKILLS:
@@ -54,6 +62,7 @@ bool Game::isOffsetLibUnlock(Offset offset) {
         case Offset::LIB_TRAITS:
         case Offset::LIB_ITEMS:
         case Offset::LIB_TITLES:
+        case Offset::WIFI_STATUES_BITS:
             return true;
 
         default:

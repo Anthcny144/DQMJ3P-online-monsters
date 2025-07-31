@@ -3,7 +3,7 @@
 using namespace CTRPluginFramework;
 
 struct MessageBoxPlus {
-    static void wrap(const std::string& title, const std::string& msg, ClearScreen clear = ClearScreen::Both, DialogType dialogue = DialogType::DialogOk);
+    static bool wrap(const std::string& title, const std::string& msg, DialogType dialogue = DialogType::DialogOk, ClearScreen clear = ClearScreen::Both);
 };
 
 struct CustomIconPlus {

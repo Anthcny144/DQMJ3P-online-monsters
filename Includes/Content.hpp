@@ -2,6 +2,7 @@
 #include <CTRPluginFramework.hpp>
 #include "Memory.hpp"
 #include <array>
+#include <functional>
 #include <vector>
 using namespace CTRPluginFramework;
 
@@ -40,10 +41,12 @@ struct Item {
     std::string name, unlockMethod;
     u16 id;
     bool unlockableOnce;
+    std::function<void(Item*)> onUnlock;
 
-    Item(const std::string& name, u16 id, bool unlockableOnce, const std::string& unlockMethod);
+    Item(const std::string& name, u16 id, bool unlockableOnce, const std::string& unlockMethod, std::function<void(Item*)> onUnlock = nullptr);
     
     static std::vector<Item> get();
+    static void fluffyScruffyBooks();
 };
 
 struct Title {

@@ -8,6 +8,7 @@
 #include "String.hpp"
 #include <array>
 #include <type_traits>
+#include <unordered_map>
 #include <vector>
 using namespace CTRPluginFramework;
 
@@ -18,7 +19,60 @@ std::vector<Item> Cheat::items;
 std::vector<Title> Cheat::titles;
 std::vector<std::string> Cheat::skillNames, Cheat::itemNames, Cheat::titleNames;
 
-void Cheat::otherUnobtainableContent(MenuEntry* entry) {
+void Cheat::init() {
+    const std::string all = String::all;
+
+    // monster data
+    if (Cheat::monsters.empty())
+        Cheat::monsters = Monster::get();
+
+    // skill data
+    if (Cheat::skills.empty())
+        Cheat::skills = Skill::get();
+
+    // item data
+    if (Cheat::items.empty())
+        Cheat::items = Item::get();
+
+    // title data
+    if (Cheat::titles.empty())
+        Cheat::titles = Title::get();
+
+    // content names
+    if (Cheat::skillNames.empty() && Cheat::itemNames.empty() && Cheat::titleNames.empty()) {
+        Cheat::skillNames.push_back(all);
+        Cheat::itemNames.push_back(all);
+        Cheat::titleNames.push_back(all);
+        for (Skill& skill : Cheat::skills) Cheat::skillNames.push_back(skill.name);
+        for (Item& item : Cheat::items) Cheat::itemNames.push_back(item.name);
+        for (Title& title : Cheat::titles) Cheat::titleNames.push_back(title.name);
+    }
+
+    // monster icons
+    if (Cheat::monsterIcons.empty()) {
+        Cheat::monsterIcons.emplace_back(CustomIconPlus::loadIcon("Icons/all.bin"));
+
+        for (Monster& monster : monsters) {
+            std::string path = "Icons/" + monster.iconName + ".bin";
+            Cheat::monsterIcons.emplace_back(CustomIconPlus::loadIcon(path));
+        }
+    }
+
+    // wi-fi coin icons
+    if (Cheat::coinIcons.empty()) {
+        static std::array<std::string, 4> coinNames = {"bron", "silv", "gold", "plat"};
+
+        for (std::string& coinName : coinNames) {
+            std::string path = "Icons/coin_" + coinName + ".bin";
+            Cheat::coinIcons.emplace_back(CustomIconPlus::loadIcon(path));
+        }
+    }
+
+    Cheat::sirloinPatch();
+    Cheat::wiFiCoinPatch();
+}
+
+void Cheat::unobtainableContent(MenuEntry* entry) {
     u32 addr;
     if (!PTR::get(PTR::Type::SAVE, addr) || Storage::isEmpty()) {
         MessageBoxPlus::wrap(String::error, String::noMonster);
@@ -132,8 +186,14 @@ void Cheat::otherUnobtainableContent(MenuEntry* entry) {
                 if (item.unlockableOnce && Game::isUnlocked(Offset::LIB_ITEMS, item.id))
                     continue;
 
-                count += Game::unlock(Offset::LIB_ITEMS, item.id);
+                bool unlocked = Game::unlock(Offset::LIB_ITEMS, item.id);
                 Game::increaseItemCount(item.id);
+
+                if (unlocked) {
+                    count++;
+                    if (item.onUnlock)
+                        item.onUnlock(&item);
+                }
             }
 
             MessageBoxPlus::wrap(String::success,
@@ -146,6 +206,10 @@ void Cheat::otherUnobtainableContent(MenuEntry* entry) {
             if (item.unlockableOnce && !Game::isUnlocked(Offset::LIB_ITEMS, item.id)) {
                 Game::unlock(Offset::LIB_ITEMS, item.id);
                 Game::increaseItemCount(item.id);
+
+                if (item.onUnlock)
+                    item.onUnlock(&item);
+
                 MessageBoxPlus::wrap(String::success, Color::Yellow << item.name << Color::Silver << " has been unlocked in the library and added in your inventory!");
             }
             else
@@ -192,6 +256,56 @@ void Cheat::otherUnobtainableContent(MenuEntry* entry) {
         }
     }
 }
+    
+void Cheat::grandEstarkEventFix(MenuEntry* entry) {
+    u32 addrSave, addrField1, addrField2;
+    if (!PTR::get(PTR::Type::SAVE, addrSave))
+        return;
+
+    const u8 flag_5ItemsHoganTalked = 1 << 5,
+             flag_inspectedMachine1 = 1 << 7,
+             flag_inspectedMachine2 = 1 << 3;
+
+    u8 field1, field2;
+    addrField1 = addrSave + Offset::GRAND_ESTARK_FIX_BITFIELD1;
+    addrField2 = addrSave + Offset::GRAND_ESTARK_FIX_BITFIELD2;
+    Process::Read8(addrField1, field1);
+    Process::Read8(addrField2, field2);
+
+    // check if part of this event is already done
+    if ((field1 & flag_inspectedMachine1) && (field2 & flag_inspectedMachine2)) {
+        MessageBoxPlus::wrap(String::error, String::estarkAlreadyDone);
+        return;
+    }
+
+    // check if player has all 5 needed items
+    for (size_t i = 0; i < Macro::GRAND_ESTARK_ITEM_COUNT; i++) {
+        u16 itemId;
+        Process::Read16(addrSave + Offset::GRAND_ESTARK_INVENTORY_ITEMS + i * sizeof(itemId), itemId);
+        if (itemId == 0) {
+            MessageBoxPlus::wrap(String::error, String::estarkNot5Items);
+            return;
+        }
+    }
+
+    // has talked to Hogan about the 5 items?
+    if (!(field1 & flag_5ItemsHoganTalked)) {
+        MessageBoxPlus::wrap(String::error, String::estarkRoryBellows);
+        return;
+    }
+
+    // set machine to inspected
+    field1 |= flag_inspectedMachine1;
+    field2 |= flag_inspectedMachine2;
+    Process::Write8(addrField1, field1);
+    Process::Write8(addrField2, field2);
+
+    // remove the 5 items
+    for (size_t i = 0; i < Macro::GRAND_ESTARK_ITEM_COUNT; i++)
+        Process::Write16(addrSave + Offset::GRAND_ESTARK_INVENTORY_ITEMS + i * sizeof(u16), 0);
+
+    MessageBoxPlus::wrap(String::success, String::estarkFixed);
+}
 
 void Cheat::wiFiCoins(MenuEntry* entry) {
     u32 addr;
@@ -221,58 +335,36 @@ void Cheat::wiFiCoins(MenuEntry* entry) {
     goto ask;
 }
 
-void Cheat::init() {
-    Clock clock;
-    const std::string all = String::all;
+void Cheat::j3Transfer(Item* item) {
+    u32 addr, flags;
+    PTR::get(PTR::Type::SAVE, addr);
+    addr += Offset::J3_TRANSFERED_BITS;
 
-    // monster data
-    if (Cheat::monsters.empty())
-        Cheat::monsters = Monster::get();
+    Process::Read32(addr, flags);
+    flags |= (1 << 23); // has transfered monster from J3?
+    flags |= (1 << 24); // has claimed ticket (and starter) from Wood Park machine?
+    Process::Write32(addr, flags);
+}
 
-    // skill data
-    if (Cheat::skills.empty())
-        Cheat::skills = Skill::get();
+void Cheat::fluffyScruffyBooks(Item* item) {
+    static std::unordered_map<u16, u32> statueBits =  {
+        {0x3E3, 1 << 14}, // Fluffy 1
+        {0x3E4, 1 << 15}, // Fluffy 2
+        {0x3E5, 1 << 16}, // Scruffy 1
+        {0x3E6, 1 << 17}, // Scruffy 2
+    };
 
-    // item data
-    if (Cheat::items.empty())
-        Cheat::items = Item::get();
+    if (!item || !statueBits.contains(item->id))
+        return;
 
-    // title data
-    if (Cheat::titles.empty())
-        Cheat::titles = Title::get();
+    u32 addr, flags;
+    PTR::get(PTR::Type::SAVE, addr);
+    addr += Offset::WIFI_STATUES_BITS;
 
-    // content names
-    if (Cheat::skillNames.empty() && Cheat::itemNames.empty() && Cheat::titleNames.empty()) {
-        Cheat::skillNames.push_back(all);
-        Cheat::itemNames.push_back(all);
-        Cheat::titleNames.push_back(all);
-        for (Skill& skill : Cheat::skills) Cheat::skillNames.push_back(skill.name);
-        for (Item& item : Cheat::items) Cheat::itemNames.push_back(item.name);
-        for (Title& title : Cheat::titles) Cheat::titleNames.push_back(title.name);
-    }
-
-    // monster icons
-    if (Cheat::monsterIcons.empty()) {
-        Cheat::monsterIcons.emplace_back(CustomIconPlus::loadIcon("Icons/all.bin"));
-
-        for (Monster& monster : monsters) {
-            std::string path = "Icons/" + monster.iconName + ".bin";
-            Cheat::monsterIcons.emplace_back(CustomIconPlus::loadIcon(path));
-        }
-    }
-
-    // wi-fi coin icons
-    if (Cheat::coinIcons.empty()) {
-        static std::array<std::string, 4> coinNames = {"bron", "silv", "gold", "plat"};
-
-        for (std::string& coinName : coinNames) {
-            std::string path = "Icons/coin_" + coinName + ".bin";
-            Cheat::coinIcons.emplace_back(CustomIconPlus::loadIcon(path));
-        }
-    }
-
-    Cheat::sirloinPatch();
-    Cheat::wiFiCoinPatch();
+    u32 statueBit = statueBits[item->id];
+    Process::Read32(addr, flags);
+    flags |= statueBit;
+    Process::Write32(addr, flags);
 }
 
 void Cheat::wiFiCoinPatch() {
@@ -289,7 +381,7 @@ void Cheat::sirloinPatch() {
 std::string Cheat::invalidMonstersWarning(bool single) {
     std::string monsterMonsters = single ? "monster" : "monsters",
                 itThem = single ? "it" : "them";
-    return (Color::Orange << "WARNING!" << Color::Silver << " The generated " << monsterMonsters << (single ? " is an " : "are ") << Color::Red << "invalid monster" << (single ? "" : "s") << Color::Silver << ". If you want " << itThem << " to be valid, you need to buy " << itThem << " at the Wi-Fi shop.\nCheck the cheat notes for more info about invalid monsters.");
+    return (Color::Orange << "WARNING!" << Color::Silver << " The generated " << monsterMonsters << (single ? " is an " : "are ") << Color::Red << "invalid monster" << (single ? "" : "s") << Color::Silver << ". If you want " << itThem << " to be valid, you need to buy " << itThem << " at the Wi-Fi Square shop.\nCheck the cheat notes for more info about invalid monsters.");
 }
 
 bool KBCallback::parseEvent(KeyboardEvent& event, int& choice, bool& all) {
